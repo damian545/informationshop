@@ -1,15 +1,18 @@
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
 var expressHbs = require("express-handlebars");
 var mongoose = require("mongoose");
 var session = require("express-session");
 var passport = require("passport");
 var flash = require("connect-flash");
 
-var indexRouter = require("./routes/index");
+var MongoStore = require("connect-mongo")(session);
+
+var routes = require("./routes/index");
+var userRoutes = require("./routes/user");
 
 var app = express();
 
@@ -22,18 +25,31 @@ app.set("view engine", ".hbs");
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(
-  session({ secret: "secretkey", resave: false, saveUninitialized: false })
+  session({
+    secret: "secretkey",
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 100 * 60 * 1000 },
+  })
 );
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  res.locals.session = req.session;
+  next();
+});
 
+app.use("/user", userRoutes);
+app.use("/", routes);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
