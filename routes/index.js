@@ -54,4 +54,32 @@ router.get("/checkout", function (req, res, next) {
   res.render("shop/checkout", { total: cart.totalPrice });
 });
 
+router.post("/checkout", function (req, res, next) {
+  if (!req.session.cart) {
+    return res.redirect("/shopping-cart");
+  }
+  var cart = new Cart(req.session.cart);
+
+  var stripe = require("stripe")("sk_test_pweF4VBTjmx6qKT3WgvKUKO4");
+
+  stripe.charges.create(
+    {
+      amount: cart.totalPrice * 100,
+      currency: "aus",
+      source: req.body.stripeToken, // obtained with Stripe.js
+      description: "Test Charge",
+    },
+    function (err, charge) {
+      // asynchronously called
+      if (err) {
+        req.flash("error", err.message);
+        return res.redirect("/checkout");
+      }
+      req.flash("success", "Successfully bought product!");
+      req.cart = null;
+      res.redirect("/");
+    }
+  );
+});
+
 module.exports = router;
