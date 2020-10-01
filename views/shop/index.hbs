@@ -1,3 +1,11 @@
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessage}}hidden{{/if}}>
+            {{successMsg}}
+        </div>
+    </div>
+</div>
+
 {{# each products }}
 Product!
 {{/each}}
@@ -6,41 +14,40 @@ Product!
 <div class="row">
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/putting.jpg" style="width:300px;height:170px;" alt="golfer image" class="img-responsive">
+            <img src="{{ this.imagePath }}" style="width:300px;height:170px;" alt="golfer image" class="img-responsive">
             <div class="caption">
-                <h3>How to putt in golf.</h3>
-                <p class="description">Selling the ability to putt a golf ball.</p>
+                <h3>{{ this.title }}</h3>
+                <p class="description">{{ this.description }}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$50</div><a href="#" class="btn btn-success pull-right"
-                        role="button">Add to shopping cart</a>
+                    <div class="price pull-left">${{ this.price }}</div><a href="/add-to-cart/{{this.id}}"
+                        class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/Fitting R33 body kit.webp" style="width:300px;height:170px;" alt="bodykit image"
+            <img src="{{ this.imagePath }}" style="width:300px;height:170px;" alt="bodykit image"
                 class="img-responsive">
             <div class="caption">
-                <h3>How to fit a body kit.</h3>
-                <p class="description">Selling the ability to fit a body kit.</p>
+                <h3>{{ this.title }}</h3>
+                <p class="description">{{ this.description }}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$100</div><a href="#" class="btn btn-success pull-right"
-                        role="button">Add to shopping cart</a>
+                    <div class="price pull-left">${{ this.price }}</div><a href="/add-to-cart/{{this.id}}"
+                        class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/fading.webp" style="width:300px;height:170px;" alt="graffiti image"
-                class="img-responsive">
+            <img src="{{this.imagePath}}" style="width:300px;height:170px;" alt="graffiti image" class="img-responsive">
             <div class="caption">
-                <h3>How to fade in Graffiti.</h3>
-                <p class="description">Selling the ability to fade two colors.</p>
+                <h3>{{this.title}}</h3>
+                <p class="description">{{this.description}}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$30</div><a href="#" class="btn btn-success pull-right"
-                        role="button">Add to shopping cart</a>
+                    <div class="price pull-left">${{this.price}}</div><a href="/add-to-cart/{{this.id}}"
+                        class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>
         </div>
@@ -50,41 +57,40 @@ Product!
 <div class="row">
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/Versawall.jpg" style="width:300px;height:170px;" alt="versawall image"
+            <img src="{{this.imagePath}}" style="width:300px;height:170px;" alt="versawall image"
                 class="img-responsive">
             <div class="caption">
-                <h3>How to use versawall.</h3>
-                <p class="description">Selling the ability to use versawall.</p>
+                <h3>{{this.title}}</h3>
+                <p class="description">{{this.description}}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$80</div><a href="#" class="btn btn-success pull-right"
-                        role="button">Add to shopping cart</a>
+                    <div class="price pull-left">${{this.price}}</div><a href="/add-to-cart/{{this.id}}"
+                        class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/straighten-hair.webp" style="width:300px;height:170px;" alt="hair image"
-                class="img-responsive">
+            <img src="{{this.imagePath}}" style="width:300px;height:170px;" alt="hair image" class="img-responsive">
             <div class="caption">
-                <h3>How to straighten hair.</h3>
-                <p class="description">Selling the ability to straighten hair.</p>
+                <h3>{{this.title}}</h3>
+                <p class="description">{{this.description}}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$35</div><a href="#" class="btn btn-success pull-right"
-                        role="button">Add to shopping cart</a>
+                    <div class="price pull-left">${{this.price}}</div><a href="/add-to-cart/{{this.id}}"
+                        class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-            <img src="./images/kick flip.jpg" style="width:300px;height:170px;" alt="skateboarder image"
+            <img src="{{this.imagePath}}" style="width:300px;height:170px;" alt="skateboarder image"
                 class="img-responsive">
             <div class="caption">
-                <h3>How to do a kick flip.</h3>
-                <p class="description">Selling the ability to kick flip.</p>
+                <h3>{{this.title}}</h3>
+                <p class="description">{{this.description}}</p>
                 <div class="clearfix">
-                    <div class="price pull-left">$50</div><a href="/add-to-cart/{{this._id}}"
+                    <div class="price pull-left">${{this.price}}</div><a href="/add-to-cart/{{this._id}}"
                         class="btn btn-success pull-right" role="button">Add to shopping cart</a>
                 </div>
             </div>

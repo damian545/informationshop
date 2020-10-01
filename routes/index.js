@@ -6,6 +6,7 @@ var Product = require("../models/product");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  var successMsg = req.flash("success")[0];
   Product.find(function (err, docs) {
     var productChunks = [];
     var chunkSize = 3;
@@ -14,8 +15,10 @@ router.get("/", function (req, res, next) {
     }
 
     res.render("shop/index", {
-      title: "Information Shop",
+      title: "Shopping Cart",
       products: productChunks,
+      successMsg: successMsg,
+      noMessage: !successMsg,
     });
   });
 });
@@ -51,7 +54,12 @@ router.get("/checkout", function (req, res, next) {
     return res.redirect("/shopping-cart");
   }
   var cart = new Cart(req.session.cart);
-  res.render("shop/checkout", { total: cart.totalPrice });
+  var errMsg = req.flash("error")[0];
+  res.render("shop/checkout", {
+    total: cart.totalPrice,
+    errMsg: errMsg,
+    noError: !errMsg,
+  });
 });
 
 router.post("/checkout", function (req, res, next) {
@@ -76,7 +84,7 @@ router.post("/checkout", function (req, res, next) {
         return res.redirect("/checkout");
       }
       req.flash("success", "Successfully bought product!");
-      req.cart = null;
+      req.session.cart = null;
       res.redirect("/");
     }
   );
