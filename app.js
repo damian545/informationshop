@@ -26,6 +26,7 @@ app.set("view engine", ".hbs");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 app.use(
   session({
@@ -37,7 +38,6 @@ app.use(
   })
 );
 app.use(flash());
-app.use(validator());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
